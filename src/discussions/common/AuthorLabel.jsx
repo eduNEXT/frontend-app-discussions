@@ -14,14 +14,14 @@ import messages from '../messages';
 import { discussionsPath } from '../utils';
 import { DiscussionContext } from './context';
 
-function AuthorLabel({
+const AuthorLabel = ({
   intl,
   author,
   authorLabel,
   linkToProfile,
   labelColor,
   alert,
-}) {
+}) => {
   const location = useLocation();
   const { courseId } = useContext(DiscussionContext);
   let icon = null;
@@ -41,7 +41,7 @@ function AuthorLabel({
   const className = classNames('d-flex align-items-center', labelColor);
 
   const showUserNameAsLink = useShowLearnersTab()
-      && linkToProfile && author && author !== intl.formatMessage(messages.anonymous);
+    && linkToProfile && author && author !== intl.formatMessage(messages.anonymous);
 
   const labelContents = (
     <div className={className}>
@@ -53,7 +53,7 @@ function AuthorLabel({
         role="heading"
         aria-level="2"
       >
-        {isRetiredUser ? '[Deactivated]' : author }
+        {isRetiredUser ? '[Deactivated]' : author}
       </span>
       {icon && (
         <Icon
@@ -90,8 +90,9 @@ function AuthorLabel({
         {labelContents}
       </Link>
     )
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     : <>{labelContents}</>;
-}
+};
 
 AuthorLabel.propTypes = {
   intl: intlShape.isRequired,

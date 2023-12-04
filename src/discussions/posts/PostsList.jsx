@@ -22,7 +22,7 @@ import { fetchThreads } from './data/thunks';
 import NoResults from './NoResults';
 import { PostLink } from './post';
 
-function PostsList({ posts, topics, intl }) {
+const PostsList = ({ posts, topics, intl }) => {
   const dispatch = useDispatch();
   const {
     courseId,
@@ -95,7 +95,7 @@ function PostsList({ posts, topics, intl }) {
       )}
     </>
   );
-}
+};
 
 PostsList.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({

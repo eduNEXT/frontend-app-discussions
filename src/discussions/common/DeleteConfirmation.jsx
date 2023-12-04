@@ -6,37 +6,35 @@ import { ActionRow, Button, ModalDialog } from '@edx/paragon';
 
 import messages from '../messages';
 
-function DeleteConfirmation({
+const DeleteConfirmation = ({
   intl,
   isOpen,
   title,
   description,
   onClose,
   onDelete,
-}) {
-  return (
-    <ModalDialog title={title} isOpen={isOpen} hasCloseButton={false} onClose={onClose} zIndex={5000}>
-      <ModalDialog.Header>
-        <ModalDialog.Title>
-          {title}
-        </ModalDialog.Title>
-      </ModalDialog.Header>
-      <ModalDialog.Body>
-        {description}
-      </ModalDialog.Body>
-      <ModalDialog.Footer>
-        <ActionRow>
-          <ModalDialog.CloseButton variant="tertiary">
-            {intl.formatMessage(messages.deleteConfirmationCancel)}
-          </ModalDialog.CloseButton>
-          <Button variant="primary" onClick={onDelete}>
-            {intl.formatMessage(messages.deleteConfirmationDelete)}
-          </Button>
-        </ActionRow>
-      </ModalDialog.Footer>
-    </ModalDialog>
-  );
-}
+}) => (
+  <ModalDialog title={title} isOpen={isOpen} hasCloseButton={false} onClose={onClose} zIndex={5000}>
+    <ModalDialog.Header>
+      <ModalDialog.Title>
+        {title}
+      </ModalDialog.Title>
+    </ModalDialog.Header>
+    <ModalDialog.Body>
+      {description}
+    </ModalDialog.Body>
+    <ModalDialog.Footer>
+      <ActionRow>
+        <ModalDialog.CloseButton variant="tertiary">
+          {intl.formatMessage(messages.deleteConfirmationCancel)}
+        </ModalDialog.CloseButton>
+        <Button variant="primary" onClick={onDelete}>
+          {intl.formatMessage(messages.deleteConfirmationDelete)}
+        </Button>
+      </ActionRow>
+    </ModalDialog.Footer>
+  </ModalDialog>
+);
 
 DeleteConfirmation.propTypes = {
   intl: intlShape.isRequired,

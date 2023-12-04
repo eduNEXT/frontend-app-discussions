@@ -14,10 +14,10 @@ import { selectModerationSettings, selectUserHasModerationPrivileges, selectUser
 import { postShape } from '../posts/post/proptypes';
 import AuthorLabel from './AuthorLabel';
 
-function AlertBanner({
+const AlertBanner = ({
   intl,
   content,
-}) {
+}) => {
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
   const userIsGroupTa = useSelector(selectUserIsGroupTa);
   const { reasonCodesEnabled } = useSelector(selectModerationSettings);
@@ -61,7 +61,7 @@ function AlertBanner({
       )}
     </>
   );
-}
+};
 
 AlertBanner.propTypes = {
   intl: intlShape.isRequired,

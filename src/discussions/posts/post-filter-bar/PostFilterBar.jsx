@@ -58,9 +58,9 @@ ActionItem.propTypes = {
   selected: PropTypes.string.isRequired,
 };
 
-function PostFilterBar({
+const PostFilterBar = ({
   intl,
-}) {
+}) => {
   const dispatch = useDispatch();
   const { courseId } = useParams();
   const { page } = useContext(DiscussionContext);
@@ -73,9 +73,11 @@ function PostFilterBar({
 
   const [isOpen, setOpen] = useState(false);
 
-  const selectedCohort = useMemo(() => cohorts.find(cohort => (
-    toString(cohort.id) === currentFilters.cohort)),
-  [currentFilters.cohort]);
+  const selectedCohort = useMemo(
+    () => cohorts.find(cohort => (
+      toString(cohort.id) === currentFilters.cohort)),
+    [currentFilters.cohort],
+  );
 
   const handleSortFilterChange = (event) => {
     const currentType = currentFilters.postType;
@@ -282,7 +284,7 @@ function PostFilterBar({
       </Collapsible.Body>
     </Collapsible.Advanced>
   );
-}
+};
 
 PostFilterBar.propTypes = {
   intl: intlShape.isRequired,

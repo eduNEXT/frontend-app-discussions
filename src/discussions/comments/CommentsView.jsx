@@ -64,13 +64,13 @@ function usePostComments(postId, endorsed = null) {
   };
 }
 
-function DiscussionCommentsView({
+const DiscussionCommentsView = ({
   postType,
   postId,
   intl,
   endorsed,
   isClosed,
-}) {
+}) => {
   const {
     comments,
     hasMorePages,
@@ -121,7 +121,7 @@ function DiscussionCommentsView({
     </>
 
   );
-}
+};
 
 DiscussionCommentsView.propTypes = {
   postId: PropTypes.string.isRequired,
@@ -133,7 +133,7 @@ DiscussionCommentsView.propTypes = {
   ]).isRequired,
 };
 
-function CommentsView({ intl }) {
+const CommentsView = ({ intl }) => {
   const [isLoading, submitDispatch] = useDispatchWithState();
   const { postId } = useParams();
   const thread = usePost(postId);
@@ -230,7 +230,7 @@ function CommentsView({ intl }) {
       )}
     </>
   );
-}
+};
 
 CommentsView.propTypes = {
   intl: intlShape.isRequired,

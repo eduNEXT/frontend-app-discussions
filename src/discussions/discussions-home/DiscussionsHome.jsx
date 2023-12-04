@@ -27,7 +27,7 @@ import DiscussionContent from './DiscussionContent';
 import DiscussionSidebar from './DiscussionSidebar';
 import InformationBanner from './InformationsBanner';
 
-export default function DiscussionsHome() {
+const DiscussionsHome = () => {
   const location = useLocation();
   const postActionBarRef = useRef(null);
   const postEditorVisible = useSelector(
@@ -73,6 +73,7 @@ export default function DiscussionsHome() {
   }, [path]);
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <DiscussionContext.Provider value={{
       page,
       courseId,
@@ -121,7 +122,7 @@ export default function DiscussionsHome() {
                 path={[Routes.POSTS.PATH, Routes.POSTS.ALL_POSTS, Routes.LEARNERS.POSTS]}
                 render={routeProps => <EmptyPosts {...routeProps} subTitleMessage={messages.emptyAllPosts} />}
               />
-              {isRedirectToLearners && <Route path={Routes.LEARNERS.PATH} component={EmptyLearners} /> }
+              {isRedirectToLearners && <Route path={Routes.LEARNERS.PATH} component={EmptyLearners} />}
             </Switch>
           )}
         </div>
@@ -129,4 +130,6 @@ export default function DiscussionsHome() {
       {!inContext && <Footer />}
     </DiscussionContext.Provider>
   );
-}
+};
+
+export default DiscussionsHome;

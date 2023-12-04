@@ -21,11 +21,11 @@ import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
 import { postShape } from './proptypes';
 
-function Post({
+const Post = ({
   post,
   preview,
   intl,
-}) {
+}) => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -105,7 +105,7 @@ function Post({
       />
     </div>
   );
-}
+};
 
 Post.propTypes = {
   intl: intlShape.isRequired,

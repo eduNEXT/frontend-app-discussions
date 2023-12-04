@@ -18,12 +18,12 @@ import { postShape } from '../posts/post/proptypes';
 import { inBlackoutDateRange, useActions } from '../utils';
 import { DiscussionContext } from './context';
 
-function ActionsDropdown({
+const ActionsDropdown = ({
   intl,
   commentOrPost,
   disabled,
   actionHandlers,
-}) {
+}) => {
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
@@ -85,7 +85,7 @@ function ActionsDropdown({
       </ModalPopup>
     </>
   );
-}
+};
 
 ActionsDropdown.propTypes = {
   intl: intlShape.isRequired,

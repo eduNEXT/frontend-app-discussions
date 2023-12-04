@@ -8,7 +8,7 @@ import { selectArchivedTopics } from '../../../data/selectors';
 import messages from '../messages';
 import TopicGroupBase from './TopicGroupBase';
 
-function ArchivedTopicGroup({ intl }) {
+const ArchivedTopicGroup = ({ intl }) => {
   const topics = useSelector(selectArchivedTopics);
   return (
     <TopicGroupBase
@@ -18,7 +18,7 @@ function ArchivedTopicGroup({ intl }) {
       topics={topics}
     />
   );
-}
+};
 ArchivedTopicGroup.propTypes = {
   intl: intlShape.isRequired,
 };

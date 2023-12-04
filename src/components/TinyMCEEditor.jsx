@@ -57,7 +57,7 @@ const setup = (editor) => {
 };
 
 /* istanbul ignore next */
-export default function TinyMCEEditor(props) {
+const TinyMCEEditor = (props) => {
   // note that skin and content_css is disabled to avoid the normal
   // loading process and is instead loaded as a string via content_style
 
@@ -107,13 +107,13 @@ export default function TinyMCEEditor(props) {
           autosave_restore_when_empty: false,
           plugins: 'autoresize autosave codesample link lists image imagetools code emoticons charmap',
           toolbar: 'undo redo'
-                      + ' | formatselect | bold italic underline'
-                      + ' | link blockquote openedx_code image'
-                      + ' | bullist numlist outdent indent'
-                      + ' | removeformat'
-                      + ' | openedx_html'
-                      + ' | emoticons'
-                      + ' | charmap',
+            + ' | formatselect | bold italic underline'
+            + ' | link blockquote openedx_code image'
+            + ' | bullist numlist outdent indent'
+            + ' | removeformat'
+            + ' | openedx_html'
+            + ' | emoticons'
+            + ' | charmap',
           content_css: false,
           content_style: contentStyle,
           body_class: 'm-2 text-editor',
@@ -135,7 +135,7 @@ export default function TinyMCEEditor(props) {
               {intl.formatMessage(messages.imageWarningDismissButton)}
             </Button>
           </ActionRow>
-                )}
+        )}
       >
         <p>
           {intl.formatMessage(messages.imageWarningMessage)}
@@ -144,4 +144,6 @@ export default function TinyMCEEditor(props) {
     </>
 
   );
-}
+};
+
+export default TinyMCEEditor;

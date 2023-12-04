@@ -6,7 +6,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { selectAreThreadsFiltered } from '../data/selectors';
 import messages from '../messages';
 
-function NoResults({ intl }) {
+const NoResults = ({ intl }) => {
   const postsFiltered = useSelector(selectAreThreadsFiltered);
   const topicsFilter = useSelector(({ topics }) => topics.filter);
   const filters = useSelector((state) => state.threads.filters);
@@ -34,7 +34,7 @@ function NoResults({ intl }) {
       <small className={textCssClasses}>{intl.formatMessage(helpMessage)}</small>
     </div>
   );
-}
+};
 
 NoResults.propTypes = {
   intl: intlShape.isRequired,

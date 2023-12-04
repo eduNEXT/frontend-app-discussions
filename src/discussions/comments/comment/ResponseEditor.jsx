@@ -13,11 +13,11 @@ import { inBlackoutDateRange } from '../../utils';
 import messages from '../messages';
 import CommentEditor from './CommentEditor';
 
-function ResponseEditor({
+const ResponseEditor = ({
   postId,
   intl,
   addWrappingDiv,
-}) {
+}) => {
   const { inContext } = useContext(DiscussionContext);
   const [addingResponse, setAddingResponse] = useState(false);
 
@@ -51,7 +51,7 @@ function ResponseEditor({
         </Button>
       </div>
     );
-}
+};
 
 ResponseEditor.propTypes = {
   postId: PropTypes.string.isRequired,

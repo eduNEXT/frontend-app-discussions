@@ -18,11 +18,11 @@ import { selectAuthorAvatars } from '../../posts/data/selectors';
 import { useActions } from '../../utils';
 import { commentShape } from './proptypes';
 
-function CommentHeader({
+const CommentHeader = ({
   comment,
   postType,
   actionHandlers,
-}) {
+}) => {
   const authorAvatars = useSelector(selectAuthorAvatars(comment.author));
   const colorClass = AvatarOutlineAndLabelColors[comment.authorLabel];
   const hasAnyAlert = useAlertBannerVisible(comment);
@@ -91,7 +91,7 @@ function CommentHeader({
       </div>
     </div>
   );
-}
+};
 
 CommentHeader.propTypes = {
   comment: commentShape.isRequired,

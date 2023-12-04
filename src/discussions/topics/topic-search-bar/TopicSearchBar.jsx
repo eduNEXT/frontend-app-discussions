@@ -8,7 +8,7 @@ import { SearchField } from '@edx/paragon';
 import { setFilter } from '../data';
 import messages from '../messages';
 
-function TopicSearchBar({ intl }) {
+const TopicSearchBar = ({ intl }) => {
   const dispatch = useDispatch();
   return (
     <div className="d-flex flex-row p-1 align-items-center">
@@ -20,7 +20,7 @@ function TopicSearchBar({ intl }) {
       />
     </div>
   );
-}
+};
 
 TopicSearchBar.propTypes = {
   intl: intlShape.isRequired,

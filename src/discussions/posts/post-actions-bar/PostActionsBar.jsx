@@ -19,10 +19,10 @@ import messages from './messages';
 
 import './actionBar.scss';
 
-function PostActionsBar({
+const PostActionsBar = ({
   intl,
   inContext,
-}) {
+}) => {
   const dispatch = useDispatch();
   const loadingStatus = useSelector(selectconfigLoadingStatus);
   const blackoutDateRange = useSelector(selectBlackoutDate);
@@ -65,7 +65,7 @@ function PostActionsBar({
       )}
     </div>
   );
-}
+};
 
 PostActionsBar.propTypes = {
   intl: intlShape.isRequired,

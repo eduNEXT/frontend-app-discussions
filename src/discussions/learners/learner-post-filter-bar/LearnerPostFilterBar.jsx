@@ -10,7 +10,7 @@ import { fetchCourseCohorts } from '../../cohorts/data/thunks';
 import { selectUserHasModerationPrivileges, selectUserIsGroupTa } from '../../data/selectors';
 import { setPostFilter } from '../data/slices';
 
-function LearnerPostFilterBar() {
+const LearnerPostFilterBar = () => {
   const dispatch = useDispatch();
   const { courseId } = useParams();
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
@@ -84,6 +84,6 @@ function LearnerPostFilterBar() {
       showCohortsFilter={userHasModerationPrivileges || userIsGroupTa}
     />
   );
-}
+};
 
 export default LearnerPostFilterBar;

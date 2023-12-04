@@ -12,9 +12,9 @@ import messages from './messages';
 
 import './navBar.scss';
 
-function CourseTabsNavigation({
+const CourseTabsNavigation = ({
   activeTab, className, intl, courseId, rootSlug,
-}) {
+}) => {
   const dispatch = useDispatch();
 
   const tabs = useSelector(state => state.courseTabs.tabs);
@@ -27,25 +27,25 @@ function CourseTabsNavigation({
       <div className="container-xl">
         {!!tabs.length
           && (
-          <Tabs
-            className="nav-underline-tabs"
-            aria-label={intl.formatMessage(messages.courseMaterial)}
-          >
-            {tabs.map(({ url, title, slug }) => (
-              <a
-                key={slug}
-                className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTab })}
-                href={url}
-              >
-                {title}
-              </a>
-            ))}
-          </Tabs>
+            <Tabs
+              className="nav-underline-tabs"
+              aria-label={intl.formatMessage(messages.courseMaterial)}
+            >
+              {tabs.map(({ url, title, slug }) => (
+                <a
+                  key={slug}
+                  className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTab })}
+                  href={url}
+                >
+                  {title}
+                </a>
+              ))}
+            </Tabs>
           )}
       </div>
     </div>
   );
-}
+};
 
 CourseTabsNavigation.propTypes = {
   activeTab: PropTypes.string,

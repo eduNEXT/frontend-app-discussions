@@ -23,13 +23,13 @@ import CommentHeader from './CommentHeader';
 import { commentShape } from './proptypes';
 import Reply from './Reply';
 
-function Comment({
+const Comment = ({
   postType,
   comment,
   showFullThread = true,
   isClosedPost,
   intl,
-}) {
+}) => {
   const dispatch = useDispatch();
   const hasChildren = comment.childCount > 0;
   const isNested = Boolean(comment.parentId);
@@ -105,18 +105,18 @@ function Comment({
             ))}
           </div>
           {hasMorePages && (
-          <Button
-            onClick={handleLoadMoreComments}
-            variant="link"
-            block="true"
-            className="mt-4.5 font-size-14 font-style-normal font-family-inter font-weight-500 px-2.5 py-2"
-            data-testid="load-more-comments-responses"
-            style={{
-              lineHeight: '20px',
-            }}
-          >
-            {intl.formatMessage(messages.loadMoreComments)}
-          </Button>
+            <Button
+              onClick={handleLoadMoreComments}
+              variant="link"
+              block="true"
+              className="mt-4.5 font-size-14 font-style-normal font-family-inter font-weight-500 px-2.5 py-2"
+              data-testid="load-more-comments-responses"
+              style={{
+                lineHeight: '20px',
+              }}
+            >
+              {intl.formatMessage(messages.loadMoreComments)}
+            </Button>
           )}
           {!isNested && showFullThread && (
             isReplying ? (
@@ -129,6 +129,7 @@ function Comment({
                 onCloseEditor={() => setReplying(false)}
               />
             ) : (
+              // eslint-disable-next-line react/jsx-no-useless-fragment
               <>
                 {(!isClosedPost && !inBlackoutDateRange(blackoutDateRange))
                   && (
@@ -151,7 +152,7 @@ function Comment({
       </div>
     </div>
   );
-}
+};
 
 Comment.propTypes = {
   postType: PropTypes.oneOf(['discussion', 'question']).isRequired,

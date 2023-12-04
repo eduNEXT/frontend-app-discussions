@@ -12,14 +12,14 @@ let store;
 initializeMockApp();
 describe('Hooks', () => {
   describe('useCurrentDiscussionTopic', () => {
-    function ComponentWithHook() {
+    const ComponentWithHook = () => {
       const topic = useCurrentDiscussionTopic();
       return (
         <div>
           {String(topic)}
         </div>
       );
-    }
+    };
 
     function renderComponent({ topicId, category }) {
       return render(
