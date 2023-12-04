@@ -16,7 +16,8 @@
     "lint:fix": "fedx-scripts eslint --ext .js --ext .jsx . --fix",
     "snapshot": "fedx-scripts jest --updateSnapshot",
     "start": "fedx-scripts webpack-dev-server --progress",
-    "test": "fedx-scripts jest --coverage --passWithNoTests"
+    "test": "fedx-scripts jest --coverage --passWithNoTests",
+    "replace-variables": "paragon replace-variables -p src -t usage"
   },
   "husky": {
     "hooks": {
@@ -34,10 +35,10 @@
   },
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-openedx@1.1.0",
-    "@edx/frontend-component-footer": "12.0.0",
-    "@edx/frontend-component-header": "4.0.3",
-    "@edx/frontend-platform": "4.4.0",
-    "@edx/paragon": "20.15.0",
+    "@edx/frontend-component-footer": "npm:@edunext/frontend-component-footer@13.0.0-alpha.5",
+    "@edx/frontend-component-header": "npm:@edunext/frontend-component-header@5.0.0-alpha.5",
+    "@edx/frontend-platform": "npm:@edunext/frontend-platform@3.7.0-alpha.14",
+    "@edx/paragon": "22.0.0-alpha.13",
     "@reduxjs/toolkit": "1.8.0",
     "@tinymce/tinymce-react": "3.13.1",
     "babel-polyfill": "6.26.0",
@@ -60,13 +61,13 @@
     "yup": "0.31.1"
   },
   "devDependencies": {
-    "@edx/browserslist-config": "1.1.0",
-    "@edx/frontend-build": "12.8.38",
+    "@edx/browserslist-config": "1.2.0",
+    "@edx/frontend-build": "github:edunext/frontend-build#ednx-release/css-variables",
     "@edx/reactifex": "1.0.3",
     "@testing-library/jest-dom": "5.16.2",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
-    "axios-mock-adapter": "1.20.0",
+    "axios-mock-adapter": "1.22.0",
     "babel-plugin-react-intl": "8.2.25",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "glob": "7.2.0",
