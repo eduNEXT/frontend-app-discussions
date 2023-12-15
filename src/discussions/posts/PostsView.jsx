@@ -14,34 +14,34 @@ import { setSearchQuery } from './data/slices';
 import PostFilterBar from './post-filter-bar/PostFilterBar';
 import PostsList from './PostsList';
 
-function AllPostsList() {
+const AllPostsList = () => {
   const posts = useSelector(selectAllThreads);
   return <PostsList posts={posts} topics={null} />;
-}
+};
 
-function TopicPostsList({ topicId }) {
+const TopicPostsList = ({ topicId }) => {
   const posts = useSelector(selectTopicThreads([topicId]));
   return <PostsList posts={posts} topics={[topicId]} />;
-}
+};
 
 TopicPostsList.propTypes = {
   topicId: PropTypes.string.isRequired,
 };
 
-function CategoryPostsList({ category }) {
+const CategoryPostsList = ({ category }) => {
   const { inContext } = useContext(DiscussionContext);
   const groupedCategory = useSelector(selectCurrentCategoryGrouping)(category);
   // If grouping at subsection is enabled, only apply it when browsing discussions in context in the learning MFE.
   const topicIds = useSelector(selectTopicsUnderCategory)(inContext ? groupedCategory : category);
   const posts = useSelector(selectTopicThreads(topicIds));
   return <PostsList posts={posts} topics={topicIds} />;
-}
+};
 
 CategoryPostsList.propTypes = {
   category: PropTypes.string.isRequired,
 };
 
-function PostsView() {
+const PostsView = () => {
   const {
     topicId,
     category,
@@ -94,7 +94,7 @@ function PostsView() {
       </div>
     </div>
   );
-}
+};
 
 PostsView.propTypes = {
 };

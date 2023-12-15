@@ -15,9 +15,9 @@ import { selectAuthorAvatars } from '../data/selectors';
 import messages from './messages';
 import { postShape } from './proptypes';
 
-export function PostAvatar({
+export const PostAvatar = ({
   post, authorLabel, fromPostLink, read,
-}) {
+}) => {
   const authorAvatars = useSelector(selectAuthorAvatars(post.author));
   const outlineColor = AvatarOutlineAndLabelColors[authorLabel];
 
@@ -67,7 +67,7 @@ export function PostAvatar({
       />
     </div>
   );
-}
+};
 
 PostAvatar.propTypes = {
   post: postShape.isRequired,
@@ -82,12 +82,12 @@ PostAvatar.defaultProps = {
   read: false,
 };
 
-function PostHeader({
+const PostHeader = ({
   intl,
   post,
   preview,
   actionHandlers,
-}) {
+}) => {
   const showAnsweredBadge = preview && post.hasEndorsed && post.type === ThreadType.QUESTION;
   const authorLabelColor = AvatarOutlineAndLabelColors[post.authorLabel];
   const hasAnyAlert = useAlertBannerVisible(post);
@@ -126,7 +126,7 @@ function PostHeader({
         )}
     </div>
   );
-}
+};
 
 PostHeader.propTypes = {
   intl: intlShape.isRequired,

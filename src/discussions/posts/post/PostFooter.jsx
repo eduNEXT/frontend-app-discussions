@@ -26,12 +26,12 @@ import LikeButton from './LikeButton';
 import messages from './messages';
 import { postShape } from './proptypes';
 
-function PostFooter({
+const PostFooter = ({
   post,
   intl,
   preview,
   showNewCountLabel,
-}) {
+}) => {
   const dispatch = useDispatch();
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
   timeago.register('time-locale', timeLocale);
@@ -125,7 +125,7 @@ function PostFooter({
       </div>
     </div>
   );
-}
+};
 
 PostFooter.propTypes = {
   intl: intlShape.isRequired,

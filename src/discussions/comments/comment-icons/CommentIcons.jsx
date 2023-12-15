@@ -10,9 +10,9 @@ import timeLocale from '../../common/time-locale';
 import LikeButton from '../../posts/post/LikeButton';
 import { editComment } from '../data/thunks';
 
-function CommentIcons({
+const CommentIcons = ({
   comment,
-}) {
+}) => {
   const dispatch = useDispatch();
   timeago.register('time-locale', timeLocale);
 
@@ -29,7 +29,7 @@ function CommentIcons({
       </div>
     </div>
   );
-}
+};
 
 CommentIcons.propTypes = {
   comment: PropTypes.shape({

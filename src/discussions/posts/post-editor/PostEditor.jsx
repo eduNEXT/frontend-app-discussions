@@ -33,6 +33,7 @@ import {
   selectUserIsGroupTa,
   selectUserIsStaff,
 } from '../../data/selectors';
+// eslint-disable-next-line import/no-cycle
 import { EmptyPage } from '../../empty-posts';
 import { selectCoursewareTopics, selectNonCoursewareIds, selectNonCoursewareTopics } from '../../topics/data/selectors';
 import {
@@ -43,33 +44,31 @@ import { selectThread } from '../data/selectors';
 import { createNewThread, fetchThread, updateExistingThread } from '../data/thunks';
 import messages from './messages';
 
-function DiscussionPostType({
+// Need to use regular label since Form.Label doesn't support overriding htmlFor
+const DiscussionPostType = ({
   value,
   type,
   selected,
   description,
   icon,
-}) {
-  // Need to use regular label since Form.Label doesn't support overriding htmlFor
-  return (
-    <label htmlFor={`post-type-${value}`} className="d-flex p-0 my-2 mr-3">
-      <Form.Radio value={value} id={`post-type-${value}`} className="sr-only">{type}</Form.Radio>
-      <Card
-        className={classNames('border-2 shadow-none', {
-          'border-primary': selected,
-          'border-light-400': !selected,
-        })}
-        style={{ cursor: 'pointer', width: '14.25rem' }}
-      >
-        <Card.Section className="py-3 px-10px d-flex flex-column align-items-center">
-          <span className="text-primary-300 mb-0.5">{icon}</span>
-          <span className="text-gray-700 mb-0.5">{type}</span>
-          <span className="x-small text-gray-500">{description}</span>
-        </Card.Section>
-      </Card>
-    </label>
-  );
-}
+}) => (
+  <label htmlFor={`post-type-${value}`} className="d-flex p-0 my-2 mr-3">
+    <Form.Radio value={value} id={`post-type-${value}`} className="sr-only">{type}</Form.Radio>
+    <Card
+      className={classNames('border-2 shadow-none', {
+        'border-primary': selected,
+        'border-light-400': !selected,
+      })}
+      style={{ cursor: 'pointer', width: '14.25rem' }}
+    >
+      <Card.Section className="py-3 px-10px d-flex flex-column align-items-center">
+        <span className="text-primary-300 mb-0.5">{icon}</span>
+        <span className="text-gray-700 mb-0.5">{type}</span>
+        <span className="x-small text-gray-500">{description}</span>
+      </Card.Section>
+    </Card>
+  </label>
+);
 
 DiscussionPostType.propTypes = {
   value: PropTypes.string.isRequired,
@@ -79,9 +78,9 @@ DiscussionPostType.propTypes = {
   icon: PropTypes.element.isRequired,
 };
 
-function PostEditor({
+const PostEditor = ({
   editExisting,
-}) {
+}) => {
   const intl = useIntl();
   const { authenticatedUser } = useContext(AppContext);
   const dispatch = useDispatch();
@@ -249,215 +248,218 @@ function PostEditor({
       validationSchema={validationSchema}
       onSubmit={submitForm}
     >{
-      ({
-        values,
-        errors,
-        touched,
-        handleSubmit,
-        handleBlur,
-        handleChange,
-        resetForm,
-      }) => (
-        <Form className="m-4 card p-4 post-form" onSubmit={handleSubmit}>
-          <h3 className="mb-3">
-            {editExisting
-              ? intl.formatMessage(messages.editPostHeading)
-              : intl.formatMessage(messages.addPostHeading)}
-          </h3>
-          <Form.RadioSet
-            name="postType"
-            className="d-flex flex-row flex-wrap"
-            value={values.postType}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            aria-label={intl.formatMessage(messages.postTitle)}
-          >
-            <DiscussionPostType
-              value="discussion"
-              selected={values.postType === 'discussion'}
-              type={intl.formatMessage(messages.discussionType)}
-              icon={<Post />}
-              description={intl.formatMessage(messages.discussionDescription)}
-            />
-            <DiscussionPostType
-              value="question"
-              selected={values.postType === 'question'}
-              type={intl.formatMessage(messages.questionType)}
-              icon={<Help />}
-              description={intl.formatMessage(messages.questionDescription)}
-            />
-          </Form.RadioSet>
-          <div className="d-flex flex-row my-4.5 justify-content-between">
-            <Form.Group className="w-100 m-0">
-              <Form.Control
-                className="m-0"
-                name="topic"
-                as="select"
-                value={values.topic}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-describedby="topicAreaInput"
-                floatingLabel={intl.formatMessage(messages.topicArea)}
-                disabled={inContext}
-              >
-                {nonCoursewareTopics.map(topic => (
-                  <option
-                    key={topic.id}
-                    value={topic.id}
-                  >{topic.name || intl.formatMessage(messages.unnamedSubTopics)}
-                  </option>
-                ))}
-                {coursewareTopics.map(categoryObj => (
-                  <optgroup label={categoryObj.name || intl.formatMessage(messages.unnamedTopics)} key={categoryObj.id}>
-                    {categoryObj.topics.map(subtopic => (
-                      <option key={subtopic.id} value={subtopic.id}>
-                        {subtopic.name || intl.formatMessage(messages.unnamedSubTopics)}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            {canSelectCohort(values.topic) && (
-              <Form.Group className="w-100 ml-3 mb-0">
+        ({
+          values,
+          errors,
+          touched,
+          handleSubmit,
+          handleBlur,
+          handleChange,
+          resetForm,
+        }) => (
+          <Form className="m-4 card p-4 post-form" onSubmit={handleSubmit}>
+            <h3 className="mb-3">
+              {editExisting
+                ? intl.formatMessage(messages.editPostHeading)
+                : intl.formatMessage(messages.addPostHeading)}
+            </h3>
+            <Form.RadioSet
+              name="postType"
+              className="d-flex flex-row flex-wrap"
+              value={values.postType}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              aria-label={intl.formatMessage(messages.postTitle)}
+            >
+              <DiscussionPostType
+                value="discussion"
+                selected={values.postType === 'discussion'}
+                type={intl.formatMessage(messages.discussionType)}
+                icon={<Post />}
+                description={intl.formatMessage(messages.discussionDescription)}
+              />
+              <DiscussionPostType
+                value="question"
+                selected={values.postType === 'question'}
+                type={intl.formatMessage(messages.questionType)}
+                icon={<Help />}
+                description={intl.formatMessage(messages.questionDescription)}
+              />
+            </Form.RadioSet>
+            <div className="d-flex flex-row my-4.5 justify-content-between">
+              <Form.Group className="w-100 m-0">
                 <Form.Control
                   className="m-0"
-                  name="cohort"
+                  name="topic"
                   as="select"
-                  value={values.cohort}
+                  value={values.topic}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  aria-describedby="cohortAreaInput"
-                  floatingLabel={intl.formatMessage(messages.cohortVisibility)}
+                  aria-describedby="topicAreaInput"
+                  floatingLabel={intl.formatMessage(messages.topicArea)}
+                  disabled={inContext}
                 >
-                  <option value="default">{intl.formatMessage(messages.cohortVisibilityAllLearners)}</option>
-                  {cohorts.map(cohort => (
-                    <option key={cohort.id} value={cohort.id}>{cohort.name}</option>
+                  {nonCoursewareTopics.map(topic => (
+                    <option
+                      key={topic.id}
+                      value={topic.id}
+                    >{topic.name || intl.formatMessage(messages.unnamedSubTopics)}
+                    </option>
+                  ))}
+                  {coursewareTopics.map(categoryObj => (
+                    <optgroup
+                      label={categoryObj.name || intl.formatMessage(messages.unnamedTopics)}
+                      key={categoryObj.id}
+                    >
+                      {categoryObj.topics.map(subtopic => (
+                        <option key={subtopic.id} value={subtopic.id}>
+                          {subtopic.name || intl.formatMessage(messages.unnamedSubTopics)}
+                        </option>
+                      ))}
+                    </optgroup>
                   ))}
                 </Form.Control>
               </Form.Group>
-            )}
-          </div>
-          <div className="border-bottom border-light-400" />
-          <div className="d-flex flex-row my-4.5 justify-content-between">
-            <Form.Group
-              className="w-100 m-0"
-              isInvalid={isFormikFieldInvalid('title', {
-                errors,
-                touched,
-              })}
-            >
-              <Form.Control
-                className="m-0"
-                name="title"
-                type="text"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-describedby="titleInput"
-                floatingLabel={intl.formatMessage(messages.postTitle)}
-                value={values.title}
-              />
-              <FormikErrorFeedback name="title" />
-            </Form.Group>
-            {canDisplayEditReason && (
+              {canSelectCohort(values.topic) && (
+                <Form.Group className="w-100 ml-3 mb-0">
+                  <Form.Control
+                    className="m-0"
+                    name="cohort"
+                    as="select"
+                    value={values.cohort}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    aria-describedby="cohortAreaInput"
+                    floatingLabel={intl.formatMessage(messages.cohortVisibility)}
+                  >
+                    <option value="default">{intl.formatMessage(messages.cohortVisibilityAllLearners)}</option>
+                    {cohorts.map(cohort => (
+                      <option key={cohort.id} value={cohort.id}>{cohort.name}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              )}
+            </div>
+            <div className="border-bottom border-light-400" />
+            <div className="d-flex flex-row my-4.5 justify-content-between">
               <Form.Group
-                className="w-100 ml-3 mb-0"
-                isInvalid={isFormikFieldInvalid('editReasonCode', {
+                className="w-100 m-0"
+                isInvalid={isFormikFieldInvalid('title', {
                   errors,
                   touched,
                 })}
               >
                 <Form.Control
-                  name="editReasonCode"
                   className="m-0"
-                  as="select"
-                  value={values.editReasonCode}
+                  name="title"
+                  type="text"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  aria-describedby="editReasonCodeInput"
-                  floatingLabel={intl.formatMessage(messages.editReasonCode)}
-                >
-                  <option key="empty" value="">---</option>
-                  {editReasons.map(({ code, label }) => (
-                    <option key={code} value={code}>{label}</option>
-                  ))}
-                </Form.Control>
-                <FormikErrorFeedback name="editReasonCode" />
+                  aria-describedby="titleInput"
+                  floatingLabel={intl.formatMessage(messages.postTitle)}
+                  value={values.title}
+                />
+                <FormikErrorFeedback name="title" />
               </Form.Group>
-            )}
-          </div>
-          <div className="mb-2">
-            <TinyMCEEditor
-              onInit={
-                /* istanbul ignore next: TinyMCE is mocked so this cannot be easily tested */
-                (_, editor) => {
-                  editorRef.current = editor;
+              {canDisplayEditReason && (
+                <Form.Group
+                  className="w-100 ml-3 mb-0"
+                  isInvalid={isFormikFieldInvalid('editReasonCode', {
+                    errors,
+                    touched,
+                  })}
+                >
+                  <Form.Control
+                    name="editReasonCode"
+                    className="m-0"
+                    as="select"
+                    value={values.editReasonCode}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    aria-describedby="editReasonCodeInput"
+                    floatingLabel={intl.formatMessage(messages.editReasonCode)}
+                  >
+                    <option key="empty" value="">---</option>
+                    {editReasons.map(({ code, label }) => (
+                      <option key={code} value={code}>{label}</option>
+                    ))}
+                  </Form.Control>
+                  <FormikErrorFeedback name="editReasonCode" />
+                </Form.Group>
+              )}
+            </div>
+            <div className="mb-2">
+              <TinyMCEEditor
+                onInit={
+                  /* istanbul ignore next: TinyMCE is mocked so this cannot be easily tested */
+                  (_, editor) => {
+                    editorRef.current = editor;
+                  }
                 }
-              }
-              id={postEditorId}
-              value={values.comment}
-              onEditorChange={formikCompatibleHandler(handleChange, 'comment')}
-              onBlur={formikCompatibleHandler(handleBlur, 'comment')}
-            />
-            <FormikErrorFeedback name="comment" />
-          </div>
+                id={postEditorId}
+                value={values.comment}
+                onEditorChange={formikCompatibleHandler(handleChange, 'comment')}
+                onBlur={formikCompatibleHandler(handleBlur, 'comment')}
+              />
+              <FormikErrorFeedback name="comment" />
+            </div>
 
-          <PostPreviewPane htmlNode={values.comment} isPost editExisting={editExisting} />
+            <PostPreviewPane htmlNode={values.comment} isPost editExisting={editExisting} />
 
-          <div className="d-flex flex-row mt-n4.5 w-75 text-primary">
-            {!editExisting && (
-              <>
-                <Form.Group>
-                  <Form.Checkbox
-                    name="follow"
-                    checked={values.follow}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="mr-4.5"
-                  >
-                    {intl.formatMessage(messages.followPost)}
-                  </Form.Checkbox>
-                </Form.Group>
-                {allowAnonymousToPeers && (
-                <Form.Group>
-                  <Form.Checkbox
-                    name="anonymousToPeers"
-                    checked={values.anonymousToPeers}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    {intl.formatMessage(messages.anonymousToPeersPost)}
-                  </Form.Checkbox>
-                </Form.Group>
-                )}
-              </>
-            )}
-          </div>
+            <div className="d-flex flex-row mt-n4.5 w-75 text-primary">
+              {!editExisting && (
+                <>
+                  <Form.Group>
+                    <Form.Checkbox
+                      name="follow"
+                      checked={values.follow}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="mr-4.5"
+                    >
+                      {intl.formatMessage(messages.followPost)}
+                    </Form.Checkbox>
+                  </Form.Group>
+                  {allowAnonymousToPeers && (
+                    <Form.Group>
+                      <Form.Checkbox
+                        name="anonymousToPeers"
+                        checked={values.anonymousToPeers}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        {intl.formatMessage(messages.anonymousToPeersPost)}
+                      </Form.Checkbox>
+                    </Form.Group>
+                  )}
+                </>
+              )}
+            </div>
 
-          <div className="d-flex justify-content-end mt-2.5">
-            <Button
-              variant="outline-primary"
-              onClick={() => hideEditor(resetForm)}
-            >
-              {intl.formatMessage(messages.cancel)}
-            </Button>
-            <StatefulButton
-              labels={{
-                default: intl.formatMessage(messages.submit),
-                pending: intl.formatMessage(messages.submitting),
-              }}
-              state={submitting ? 'pending' : 'default'}
-              className="ml-2"
-              variant="primary"
-              onClick={handleSubmit}
-            />
-          </div>
-        </Form>
-      )
-    }
+            <div className="d-flex justify-content-end mt-2.5">
+              <Button
+                variant="outline-primary"
+                onClick={() => hideEditor(resetForm)}
+              >
+                {intl.formatMessage(messages.cancel)}
+              </Button>
+              <StatefulButton
+                labels={{
+                  default: intl.formatMessage(messages.submit),
+                  pending: intl.formatMessage(messages.submitting),
+                }}
+                state={submitting ? 'pending' : 'default'}
+                className="ml-2"
+                variant="primary"
+                onClick={handleSubmit}
+              />
+            </div>
+          </Form>
+        )
+      }
     </Formik>
   );
-}
+};
 
 PostEditor.propTypes = {
   editExisting: PropTypes.bool,

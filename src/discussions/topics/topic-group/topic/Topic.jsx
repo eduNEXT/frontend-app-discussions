@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars, react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -16,12 +17,12 @@ import { selectUserHasModerationPrivileges, selectUserIsGroupTa } from '../../..
 import { discussionsPath } from '../../../utils';
 import messages from '../../messages';
 
-function Topic({
+const Topic = ({
   topic,
   showDivider,
   index,
   intl,
-}) {
+}) => {
   const { courseId } = useParams();
   const topicUrl = discussionsPath(Routes.TOPICS.TOPIC, {
     courseId,
@@ -64,7 +65,7 @@ function Topic({
                     })}
                   </div>
                 </Tooltip>
-                )}
+              )}
             >
               <div className="d-flex align-items-center mr-3.5">
                 <Icon src={PostOutline} className="icon-size mr-2" />
@@ -118,7 +119,7 @@ function Topic({
       {!showDivider && <div className="divider pt-1 bg-light-500 border-top border-light-700" />}
     </Link>
   );
-}
+};
 
 export const topicShape = PropTypes.shape({
   name: PropTypes.string,

@@ -19,7 +19,7 @@ import { LearnerPostsView, LearnersView } from '../learners';
 import { PostsView } from '../posts';
 import { TopicsView } from '../topics';
 
-export default function DiscussionSidebar({ displaySidebar, postActionBarRef }) {
+const DiscussionSidebar = ({ displaySidebar, postActionBarRef }) => {
   const location = useLocation();
   const isOnDesktop = useIsOnDesktop();
   const isOnXLDesktop = useIsOnXLDesktop();
@@ -66,18 +66,18 @@ export default function DiscussionSidebar({ displaySidebar, postActionBarRef }) 
           <Route path={Routes.LEARNERS.PATH} component={LearnersView} />
         )}
         {configStatus === RequestStatus.SUCCESSFUL && (
-        <Redirect
-          from={Routes.DISCUSSIONS.PATH}
-          to={{
-            ...location,
-            pathname: Routes.POSTS.ALL_POSTS,
-          }}
-        />
+          <Redirect
+            from={Routes.DISCUSSIONS.PATH}
+            to={{
+              ...location,
+              pathname: Routes.POSTS.ALL_POSTS,
+            }}
+          />
         )}
       </Switch>
     </div>
   );
-}
+};
 
 DiscussionSidebar.defaultProps = {
   displaySidebar: false,
@@ -91,3 +91,5 @@ DiscussionSidebar.propTypes = {
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]),
 };
+
+export default DiscussionSidebar;

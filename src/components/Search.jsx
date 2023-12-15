@@ -13,7 +13,7 @@ import { setSearchQuery } from '../discussions/posts/data';
 import postsMessages from '../discussions/posts/post-actions-bar/messages';
 import { setFilter as setTopicFilter } from '../discussions/topics/data/slices';
 
-function Search({ intl }) {
+const Search = ({ intl }) => {
   const [previousSearchValue, setPreviousSearchValue] = useState('');
   const dispatch = useDispatch();
   const { page } = useContext(DiscussionContext);
@@ -59,28 +59,26 @@ function Search({ intl }) {
 
   useEffect(() => onClear(), [page]);
   return (
-    <>
-      <SearchField.Advanced
-        onClear={onClear}
-        onChange={onChange}
-        onSubmit={onSubmit}
-        value={currentValue}
-      >
-        <SearchField.Label />
-        <SearchField.Input
-          style={{ paddingRight: '1rem' }}
-          placeholder={intl.formatMessage(postsMessages.search, { page: camelCase(page) })}
+    <SearchField.Advanced
+      onClear={onClear}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      value={currentValue}
+    >
+      <SearchField.Label />
+      <SearchField.Input
+        style={{ paddingRight: '1rem' }}
+        placeholder={intl.formatMessage(postsMessages.search, { page: camelCase(page) })}
+      />
+      <span className="mt-auto mb-auto mr-2.5 pointer-cursor-hover">
+        <Icon
+          src={SearchIcon}
+          onClick={() => onSubmit(searchValue)}
         />
-        <span className="mt-auto mb-auto mr-2.5 pointer-cursor-hover">
-          <Icon
-            src={SearchIcon}
-            onClick={() => onSubmit(searchValue)}
-          />
-        </span>
-      </SearchField.Advanced>
-    </>
+      </span>
+    </SearchField.Advanced>
   );
-}
+};
 
 Search.propTypes = {
   intl: intlShape.isRequired,

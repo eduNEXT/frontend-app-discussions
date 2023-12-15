@@ -12,10 +12,10 @@ import LearnerAvatar from './LearnerAvatar';
 import LearnerFooter from './LearnerFooter';
 import { learnerShape } from './proptypes';
 
-function LearnerCard({
+const LearnerCard = ({
   learner,
   courseId,
-}) {
+}) => {
   const { inContext, learnerUsername } = useContext(DiscussionContext);
   const linkUrl = discussionsPath(Routes.LEARNERS.POSTS, {
     0: inContext ? 'in-context' : undefined,
@@ -51,7 +51,7 @@ function LearnerCard({
       </div>
     </Link>
   );
-}
+};
 
 LearnerCard.propTypes = {
   learner: learnerShape.isRequired,

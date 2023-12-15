@@ -38,12 +38,12 @@ function CourseWideTopics() {
     ));
 }
 
-function CoursewareTopics() {
+const CoursewareTopics = () => {
   const sequences = useSelector(selectSequences);
 
   return (
     <>
-      { sequences?.map(
+      {sequences?.map(
         sequence => (
           <SequenceTopicGroup
             sequence={sequence}
@@ -54,7 +54,7 @@ function CoursewareTopics() {
       <ArchivedTopicGroup />
     </>
   );
-}
+};
 
 function LegacyCoursewareTopics() {
   const { category } = useParams();
@@ -71,7 +71,7 @@ function LegacyCoursewareTopics() {
   );
 }
 
-function TopicsView() {
+const TopicsView = () => {
   const provider = useSelector(selectDiscussionProvider);
   const topicFilter = useSelector(selectTopicFilter);
   const topicsSelector = useSelector(({ topics }) => topics);
@@ -129,7 +129,7 @@ function TopicsView() {
       }
     </div>
   );
-}
+};
 
 TopicsView.propTypes = {};
 

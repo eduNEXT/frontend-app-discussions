@@ -7,13 +7,13 @@ import { Icon, IconButtonWithTooltip } from '@edx/paragon';
 import { ThumbUpFilled, ThumbUpOutline } from '../../../components/icons';
 import messages from './messages';
 
-function LikeButton({
+const LikeButton = ({
   count,
   intl,
   onClick,
   voted,
   preview,
-}) {
+}) => {
   const handleClick = (e) => {
     e.preventDefault();
     if (onClick) {
@@ -39,7 +39,7 @@ function LikeButton({
       {(count && count > 0) ? count : null}
     </div>
   );
-}
+};
 
 LikeButton.propTypes = {
   count: PropTypes.number.isRequired,

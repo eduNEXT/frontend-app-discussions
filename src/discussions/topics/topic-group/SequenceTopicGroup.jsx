@@ -6,16 +6,16 @@ import { useSelector } from 'react-redux';
 import { selectTopicsById } from '../data/selectors';
 import TopicGroupBase from './TopicGroupBase';
 
-function SequenceTopicGroup({
+const SequenceTopicGroup = ({
   sequence,
-}) {
+}) => {
   const topicsIds = sequence.topics;
   const topics = useSelector(selectTopicsById(topicsIds));
 
   return (
     <TopicGroupBase groupId={sequence.id} groupTitle={sequence.displayName} topics={topics} />
   );
-}
+};
 
 SequenceTopicGroup.propTypes = {
   sequence: PropTypes.shape({

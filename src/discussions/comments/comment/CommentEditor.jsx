@@ -23,13 +23,13 @@ import { formikCompatibleHandler, isFormikFieldInvalid } from '../../utils';
 import { addComment, editComment } from '../data/thunks';
 import messages from '../messages';
 
-function CommentEditor({
+const CommentEditor = ({
   intl,
   comment,
   onCloseEditor,
   edit,
   formClasses,
-}) {
+}) => {
   const editorRef = useRef(null);
   const { authenticatedUser } = useContext(AppContext);
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
@@ -55,6 +55,7 @@ function CommentEditor({
 
   const initialValues = {
     comment: comment.rawBody,
+    // eslint-disable-next-line react/prop-types
     editReasonCode: comment?.lastEdit?.reasonCode || (
       userIsStaff && canDisplayEditReason ? 'violates-guidelines' : undefined
     ),
@@ -173,7 +174,7 @@ function CommentEditor({
       )}
     </Formik>
   );
-}
+};
 
 CommentEditor.propTypes = {
   comment: PropTypes.shape({
@@ -182,7 +183,7 @@ CommentEditor.propTypes = {
     parentId: PropTypes.string,
     rawBody: PropTypes.string,
     author: PropTypes.string,
-    lastEdit: PropTypes.object,
+    lastEdit: PropTypes.shape({}),
   }).isRequired,
   onCloseEditor: PropTypes.func.isRequired,
   intl: intlShape.isRequired,

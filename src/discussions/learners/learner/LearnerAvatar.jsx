@@ -7,7 +7,7 @@ import { Avatar } from '@edx/paragon';
 import { selectLearnerAvatar } from '../data/selectors';
 import { learnerShape } from './proptypes';
 
-function LearnerAvatar({ learner }) {
+const LearnerAvatar = ({ learner }) => {
   const learnerAvatar = useSelector(selectLearnerAvatar(learner.username));
   return (
     <div className="mr-3 mt-1">
@@ -22,7 +22,7 @@ function LearnerAvatar({ learner }) {
       />
     </div>
   );
-}
+};
 
 LearnerAvatar.propTypes = {
   learner: learnerShape.isRequired,

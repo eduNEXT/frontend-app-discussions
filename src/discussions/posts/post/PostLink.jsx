@@ -19,12 +19,12 @@ import PostFooter from './PostFooter';
 import { PostAvatar } from './PostHeader';
 import { postShape } from './proptypes';
 
-function PostLink({
+const PostLink = ({
   post,
   isSelected,
   showDivider,
   idx,
-}) {
+}) => {
   const intl = useIntl();
   const {
     page,
@@ -47,59 +47,62 @@ function PostLink({
   const read = post.read || (!post.read && post.commentCount !== post.unreadCommentCount);
 
   return (
-    <>
-      <Link
+    <Link
+      className={
+        classNames('discussion-post p-0 text-decoration-none text-gray-900', {
+          'border-bottom border-light-400': showDivider,
+        })
+      }
+      to={linkUrl}
+      onClick={() => isSelected(post.id)}
+      style={{ lineHeight: '22px' }}
+      aria-current={isSelected(post.id) ? 'page' : undefined}
+      role="option"
+      tabIndex={(isSelected(post.id) || idx === 0) ? 0 : -1}
+    >
+      <div
         className={
-          classNames('discussion-post p-0 text-decoration-none text-gray-900', {
-            'border-bottom border-light-400': showDivider,
-          })
+          classNames(
+            'd-flex flex-row pt-2.5 pb-2 px-4 border-primary-500 position-relative',
+            { 'bg-light-300': read },
+          )
         }
-        to={linkUrl}
-        onClick={() => isSelected(post.id)}
-        style={{ lineHeight: '22px' }}
-        aria-current={isSelected(post.id) ? 'page' : undefined}
-        role="option"
-        tabIndex={(isSelected(post.id) || idx === 0) ? 0 : -1}
+        style={post.id === postId ? {
+          borderRightWidth: '4px',
+          borderRightStyle: 'solid',
+        } : null}
       >
-        <div
-          className={
-            classNames('d-flex flex-row pt-2.5 pb-2 px-4 border-primary-500 position-relative',
-              { 'bg-light-300': read })
-          }
-          style={post.id === postId ? {
-            borderRightWidth: '4px',
-            borderRightStyle: 'solid',
-          } : null}
-        >
-          <PostAvatar post={post} authorLabel={post.authorLabel} fromPostLink read={read} />
-          <div className="d-flex flex-column flex-fill" style={{ minWidth: 0 }}>
-            <div className="d-flex flex-column justify-content-start mw-100 flex-fill">
-              <div className="d-flex align-items-center pb-0 mb-0 flex-fill font-weight-500">
-                <Truncate lines={1} className="mr-1.5" whiteSpace>
-                  <span
-                    class={
-                        classNames('font-weight-500 font-size-14 text-primary-500 font-style-normal font-family-inter align-bottom',
-                          { 'font-weight-bolder': !read })
-                      }
-                  >
-                    {post.title}
-                  </span>
-                  <span class="align-bottom"> </span>
-                  <span
-                    class="text-gray-700 font-weight-normal font-size-14 font-style-normal font-family-inter align-bottom"
-                  >
-                    {isPostPreviewAvailable(post.previewBody)
-                      ? post.previewBody
-                      : intl.formatMessage(messages.postWithoutPreview)}
-                  </span>
-                </Truncate>
-                {showAnsweredBadge && (
-                  <Icon src={CheckCircle} className="text-success font-weight-500 ml-auto badge-padding" data-testid="check-icon">
-                    <span className="sr-only">{' '}answered</span>
-                  </Icon>
-                )}
+        <PostAvatar post={post} authorLabel={post.authorLabel} fromPostLink read={read} />
+        <div className="d-flex flex-column flex-fill" style={{ minWidth: 0 }}>
+          <div className="d-flex flex-column justify-content-start mw-100 flex-fill">
+            <div className="d-flex align-items-center pb-0 mb-0 flex-fill font-weight-500">
+              <Truncate lines={1} className="mr-1.5" whiteSpace>
+                <span
+                  class={
+                    classNames(
+                      'font-weight-500 font-size-14 text-primary-500 font-style-normal font-family-inter align-bottom',
+                      { 'font-weight-bolder': !read },
+                    )
+                  }
+                >
+                  {post.title}
+                </span>
+                <span class="align-bottom"> </span>
+                <span
+                  class="text-gray-700 font-weight-normal font-size-14 font-style-normal font-family-inter align-bottom"
+                >
+                  {isPostPreviewAvailable(post.previewBody)
+                    ? post.previewBody
+                    : intl.formatMessage(messages.postWithoutPreview)}
+                </span>
+              </Truncate>
+              {showAnsweredBadge && (
+                <Icon src={CheckCircle} className="text-success font-weight-500 ml-auto badge-padding" data-testid="check-icon">
+                  <span className="sr-only">{' '}answered</span>
+                </Icon>
+              )}
 
-                {canSeeReportedBadge && (
+              {canSeeReportedBadge && (
                 <Badge
                   variant="danger"
                   data-testid="reported-post"
@@ -108,29 +111,28 @@ function PostLink({
                   {intl.formatMessage(messages.contentReported)}
                   <span className="sr-only">{' '}reported</span>
                 </Badge>
-                )}
+              )}
 
-                {post.pinned && (
+              {post.pinned && (
                 <Icon
                   src={PushPin}
                   className={`icon-size ${canSeeReportedBadge || showAnsweredBadge ? 'ml-2' : 'ml-auto'}`}
                 />
-                )}
-              </div>
+              )}
             </div>
-            <AuthorLabel
-              author={post.author || intl.formatMessage(messages.anonymous)}
-              authorLabel={post.authorLabel}
-              labelColor={authorLabelColor && `text-${authorLabelColor}`}
-            />
-            <PostFooter post={post} preview intl={intl} showNewCountLabel={read} />
           </div>
+          <AuthorLabel
+            author={post.author || intl.formatMessage(messages.anonymous)}
+            authorLabel={post.authorLabel}
+            labelColor={authorLabelColor && `text-${authorLabelColor}`}
+          />
+          <PostFooter post={post} preview intl={intl} showNewCountLabel={read} />
         </div>
-        {!showDivider && post.pinned && <div className="pt-1 bg-light-500 border-top border-light-700" />}
-      </Link>
-    </>
+      </div>
+      {!showDivider && post.pinned && <div className="pt-1 bg-light-500 border-top border-light-700" />}
+    </Link>
   );
-}
+};
 
 PostLink.propTypes = {
   post: postShape.isRequired,

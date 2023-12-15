@@ -8,9 +8,9 @@ import { Close } from '@edx/paragon/icons';
 import messages from '../discussions/posts/post-editor/messages';
 import HTMLLoader from './HTMLLoader';
 
-function PostPreviewPane({
+const PostPreviewPane = ({
   htmlNode, intl, isPost, editExisting,
-}) {
+}) => {
   const [showPreviewPane, setShowPreviewPane] = useState(false);
 
   return (
@@ -34,20 +34,20 @@ function PostPreviewPane({
       )}
       <div className="d-flex justify-content-end">
         {!showPreviewPane
-        && (
-          <Button
-            variant="link"
-            size="md"
-            onClick={() => setShowPreviewPane(true)}
-            className={`text-primary-500 px-0 ${editExisting && 'mb-4.5'}`}
-          >
-            {intl.formatMessage(messages.showPreviewButton)}
-          </Button>
-        )}
+          && (
+            <Button
+              variant="link"
+              size="md"
+              onClick={() => setShowPreviewPane(true)}
+              className={`text-primary-500 px-0 ${editExisting && 'mb-4.5'}`}
+            >
+              {intl.formatMessage(messages.showPreviewButton)}
+            </Button>
+          )}
       </div>
     </>
   );
-}
+};
 
 PostPreviewPane.propTypes = {
   intl: intlShape.isRequired,

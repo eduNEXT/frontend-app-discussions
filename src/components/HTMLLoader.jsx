@@ -26,15 +26,15 @@ const baseConfig = {
   skipStartupTypeset: true,
 };
 
-function HTMLLoader({ htmlNode, componentId, cssClassName }) {
+const HTMLLoader = ({ htmlNode, componentId, cssClassName }) => {
   const isLatex = htmlNode.match(/(\${1,2})((?:\\.|.)*)\1/)
-                  || htmlNode.match(/(\[mathjax](.+?)\[\/mathjax])+/)
-                  || htmlNode.match(/(\[mathjaxinline](.+?)\[\/mathjaxinline])+/)
-                  || htmlNode.match(/(\\begin\{math}(.+?)\\end\{math})+/)
-                  || htmlNode.match(/(\\begin\{displaymath}(.+?)\\end\{displaymath})+/)
-                  || htmlNode.match(/(\\begin\{equation}(.+?)\\end\{equation})+/)
-                  || htmlNode.match(/(\\\[(.+?)\\\])+/)
-                  || htmlNode.match(/(\\\((.+?)\\\))+/);
+    || htmlNode.match(/(\[mathjax](.+?)\[\/mathjax])+/)
+    || htmlNode.match(/(\[mathjaxinline](.+?)\[\/mathjaxinline])+/)
+    || htmlNode.match(/(\\begin\{math}(.+?)\\end\{math})+/)
+    || htmlNode.match(/(\\begin\{displaymath}(.+?)\\end\{displaymath})+/)
+    || htmlNode.match(/(\\begin\{equation}(.+?)\\end\{equation})+/)
+    || htmlNode.match(/(\\\[(.+?)\\\])+/)
+    || htmlNode.match(/(\\\((.+?)\\\))+/);
 
   return (
     isLatex ? (
@@ -49,7 +49,7 @@ function HTMLLoader({ htmlNode, componentId, cssClassName }) {
       // eslint-disable-next-line react/no-danger
       : <div className={cssClassName} id={componentId} dangerouslySetInnerHTML={{ __html: htmlNode }} />
   );
-}
+};
 
 HTMLLoader.propTypes = {
   htmlNode: PropTypes.node,

@@ -9,7 +9,7 @@ import { selectTopic } from '../../topics/data/selectors';
 import { discussionsPath } from '../../utils';
 import BreadcrumbDropdown from './BreadcrumbDropdown';
 
-function BreadcrumbMenu() {
+const BreadcrumbMenu = () => {
   const {
     courseId,
     topicId,
@@ -83,7 +83,7 @@ function BreadcrumbMenu() {
         )}
     </div>
   );
-}
+};
 
 BreadcrumbMenu.propTypes = {};
 
