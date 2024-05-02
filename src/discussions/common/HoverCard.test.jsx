@@ -3,7 +3,7 @@ import {
 } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import { IntlProvider } from 'react-intl';
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { Factory } from 'rosie';
 
 import { initializeMockApp } from '@edx/frontend-platform';
@@ -60,15 +60,12 @@ async function mockAxiosReturnPagedCommentsResponses() {
 function renderComponent(postId) {
   const wrapper = render(
     <IntlProvider locale="en">
-      <AppProvider store={store}>
+      <AppProvider store={store} wrapWithRouter={false}>
         <DiscussionContext.Provider
-          value={{ courseId, postId }}
+          value={{ courseId, postId, page: 'posts' }}
         >
           <MemoryRouter initialEntries={[`/${courseId}/posts/${postId}`]}>
             <DiscussionContent />
-            <Route
-              path="*"
-            />
           </MemoryRouter>
         </DiscussionContext.Provider>
       </AppProvider>
@@ -110,7 +107,7 @@ describe('HoverCard', () => {
 
   test('it should have hover card on post', async () => {
     await waitFor(() => renderComponent(discussionPostId));
-    const post = screen.getByTestId('post-thread-1');
+    const post = await screen.findByTestId('post-thread-1');
     expect(within(post).getByTestId('hover-card-thread-1')).toBeInTheDocument();
   });
 

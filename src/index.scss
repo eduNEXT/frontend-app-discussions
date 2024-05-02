@@ -1,13 +1,7 @@
-@import "~@edx/brand/paragon/fonts.scss";
-@import "~@edx/brand/paragon/variables.scss";
-@import "~@edx/paragon/scss/core/core.scss";
-@import "~@edx/brand/paragon/overrides.scss";
+// @use "@edx/paragon/styles/css/core/custom-media-breakpoints.css" as paragonCustomMediaBreakpoints;
 
 @import "~@edx/frontend-component-footer/dist/footer";
 @import "~@edx/frontend-component-header/dist/index";
-
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome";
 
 #post,
 #comment,
@@ -242,7 +236,7 @@ header {
 .sidebar-desktop-width {
   min-width: 29rem !important;
 
-  @include media-breakpoint-down(lg) {
+  @media (--pgn-size-breakpoint-max-width-lg) {
     min-width: 25rem !important;
   }
 }
@@ -256,12 +250,12 @@ header {
 }
 
 .border-light-400-2 {
-  border: 2px solid $light-400 !important;
+  border: 2px solid var(--pgn-color-light-400) !important;
   border-width: 2px !important;
 }
 
 .border-primary-500-2 {
-  border: 2px solid $primary-500 !important;
+  border: 2px solid var(--pgn-color-primary-500) !important;
   border-width: 2px !important;
 }
 

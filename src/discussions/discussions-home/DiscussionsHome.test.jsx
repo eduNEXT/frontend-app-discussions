@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from 'react-intl';
 import { Context as ResponsiveContext } from 'react-responsive';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { Factory } from 'rosie';
 
 import { initializeMockApp } from '@edx/frontend-platform';
@@ -42,7 +42,7 @@ function renderComponent(location = `/${courseId}/`) {
   const wrapper = render(
     <IntlProvider locale="en">
       <ResponsiveContext.Provider value={{ width: 1280 }}>
-        <AppProvider store={store}>
+        <AppProvider store={store} wrapWithRouter={false}>
           <MemoryRouter initialEntries={[location]}>
             <DiscussionsHome />
           </MemoryRouter>
@@ -141,8 +141,9 @@ describe('DiscussionsHome', () => {
     });
     await executeThunk(fetchCourseConfig(courseId), store.dispatch, store.getState);
     await renderComponent(`/${courseId}/${searchByEndPoint}`);
+    const componentFound = await screen.findByText('Add a post');
 
-    expect(screen.queryByText('Add a post')).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
   });
 
   it.each([
@@ -165,8 +166,9 @@ describe('DiscussionsHome', () => {
       });
     await executeThunk(fetchThreads(courseId), store.dispatch, store.getState);
     await renderComponent(`/${courseId}/${searchByEndPoint}`);
+    const componentFound = await screen.findByText(result);
 
-    expect(screen.queryByText(result)).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
   });
 
   it.each([
@@ -192,8 +194,9 @@ describe('DiscussionsHome', () => {
           .concat(Factory.buildList('archived-topics', 2, null)));
       await executeThunk(fetchCourseTopicsV3(courseId), store.dispatch, store.getState);
       await renderComponent(`/${courseId}/${searchByEndPoint}`);
+      const componentFound = await screen.findByText('No topic selected');
 
-      expect(screen.queryByText('No topic selected')).toBeInTheDocument();
+      expect(componentFound).toBeInTheDocument();
     },
   );
 
@@ -203,15 +206,17 @@ describe('DiscussionsHome', () => {
     });
     await executeThunk(fetchCourseConfig(courseId), store.dispatch, store.getState);
     await renderComponent(`/${courseId}/learners`);
+    const componentFound = await screen.findByText('Nothing here yet');
 
-    expect(screen.queryByText('Nothing here yet')).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
   });
 
   it('should display post editor form when click on add a post button for posts', async () => {
     await executeThunk(fetchCourseConfig(courseId), store.dispatch, store.getState);
     await renderComponent(`/${courseId}/my-posts`);
     await act(async () => {
-      fireEvent.click(screen.queryByText('Add a post'));
+      const buttonFound = await screen.findByText('Add a post');
+      fireEvent.click(buttonFound);
     });
 
     await waitFor(() => expect(container.querySelector('.post-form')).toBeInTheDocument());
@@ -223,8 +228,9 @@ describe('DiscussionsHome', () => {
     });
     await executeThunk(fetchCourseConfig(courseId), store.dispatch, store.getState);
     await renderComponent(`/${courseId}/topics`);
+    const componentFound = await screen.findByText('Nothing here yet');
 
-    expect(screen.queryByText('Nothing here yet')).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
 
     await act(async () => {
       fireEvent.click(screen.queryByText('Add a post'));
@@ -235,29 +241,33 @@ describe('DiscussionsHome', () => {
 
   it('should display Add a post button for legacy topics view', async () => {
     await renderComponent(`/${courseId}/topics/topic-1`);
+    const componentFound = await screen.findByText('Add a post');
 
-    expect(screen.queryByText('Add a post')).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
   });
 
   it('should display No post selected for legacy topics view', async () => {
     await setUpV1TopicsMockResponse();
     await renderComponent(`/${courseId}/topics/category-1-topic-1`);
+    const componentFound = await screen.findByText('No post selected');
 
-    expect(screen.queryByText('No post selected')).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
   });
 
   it('should display No topic selected for legacy topics view', async () => {
     await setUpV1TopicsMockResponse();
     await renderComponent(`/${courseId}/topics`);
+    const componentFound = await screen.findByText('No topic selected');
 
-    expect(screen.queryByText('No topic selected')).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
   });
 
   it('should display navigation tabs', async () => {
     axiosMock.onGet(`${getCourseMetadataApiUrl(courseId)}`).reply(200, (Factory.build('navigationBar', 1)));
     await executeThunk(fetchTab(courseId, 'outline'), store.dispatch, store.getState);
     renderComponent(`/${courseId}/topics`);
+    const componentFound = await screen.findByText('Discussion');
 
-    expect(screen.queryByText('Discussion')).toBeInTheDocument();
+    expect(componentFound).toBeInTheDocument();
   });
 });
