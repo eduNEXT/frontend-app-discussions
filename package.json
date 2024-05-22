@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@edx/browserslist-config": "1.2.0",
-    "@openedx/frontend-build": "github:edunext/frontend-build#bc/css-variables-13.1.4",
+    "@openedx/frontend-build": "github:edunext/frontend-build#ednx-release/css-variables-13.1.4",
     "@edx/reactifex": "1.1.0",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "12.1.5",
