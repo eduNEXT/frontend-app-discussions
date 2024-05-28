@@ -1,8 +1,4 @@
-// @use "@openedx/paragon/dist/core.min.css" as paragonCore;
-// @use "@openedx/paragon/dist/light.min.css" as paragonLight;
-
-// @use "@openedx/paragon/styles/css/core/custom-media-breakpoints.css" as paragonCustomMediaBreakpoints;
-// @use "@edx/brand/dist/light.min.css" as paragonDark;
+@use "@openedx/paragon/styles/css/core/custom-media-breakpoints.css" as paragonCustomMediaBreakpoints;
 
 @import "~@edx/frontend-component-footer/dist/footer";
 @import "~@edx/frontend-component-header/dist/index";
