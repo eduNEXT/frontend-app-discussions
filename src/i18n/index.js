@@ -38,9 +38,9 @@ const appMessages = {
   ru: ruMessages,
   hi: hiMessages,
   cs: csMessages,
-  'es-AR': esARMessages,
-  'es-ES': esESMessages,
-  'fa-IR': faIRMessages,
+  'es-ar': esARMessages,
+  'es-es': esESMessages,
+  'fa-ir': faIRMessages,
 };
 
 export default [
