@@ -66,3 +66,8 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 }));
 
 jest.setTimeout(1000000);
+
+jest.mock('@edx/frontend-platform/react/hooks', () => ({
+  ...jest.requireActual('@edx/frontend-platform/react/hooks'),
+  useParagonTheme: () => [{ isThemeLoaded: true }, jest.fn()],
+}));
