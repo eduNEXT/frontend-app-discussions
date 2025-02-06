@@ -67,7 +67,7 @@ const DiscussionPostType = ({
           'border-primary': selected,
           'border-light-400': !selected,
         })}
-        style={{ cursor: 'pointer', width: `${enableInContextSidebar ? '10.021rem' : '14.25rem'}` }}
+        style={{ cursor: 'pointer', width: `${enableInContextSidebar ? '10.021rem' : '14.25rem'}`, border: '2px solid' }}
       >
         <Card.Section className="px-4 py-3 d-flex flex-column align-items-center">
           <span className="text-primary-300 mb-0.5">{icon}</span>
